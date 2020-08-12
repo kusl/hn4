@@ -32,9 +32,9 @@ for story in top_stories:
                 headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
             ).json()
             print(comment_data)
-            for kidkid in kidkids:
+            for kidkid in kids:
                 kidkid_data = requests.get(
                     f"https://hacker-news.firebaseio.com/v0/item/{story}.json",
                     headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
                 ).json()
-                console.log(kidkid_data)
+                print(kidkid_data)
