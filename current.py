@@ -72,7 +72,7 @@ def recursive(kid):
     ).json()
     if comment_data is not None:    
         my_item = get_item_from_data(comment_data)
-        with open("data/{kid}.txt", "w") as comment_file:
+        with open(f"data/{kid}.txt", "w") as comment_file:
             comment_file.write(repr(my_item))
         print(my_item)
         if "kids" in comment_data:
