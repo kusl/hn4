@@ -56,7 +56,7 @@ def recursive_print(comment_data):
     print(my_item)
     if 'kids' in comment_data:
         print(comment_data.get('kids'))
-        itemkids = comment_data.get(kids)
+        itemkids = comment_data['kids']
         for kid in itemkids:
             comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
             print(comment_url)
