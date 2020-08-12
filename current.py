@@ -42,6 +42,29 @@ class Item:
         self.itemtype = itemtype
         self.url = url
 
+def recursive_print(comment_data):
+    my_item = Item(
+        comment_data.get('itemby'),
+        comment_data.get('itemdescendants'),
+        comment_data.get('itemkids'),
+        comment_data.get('itemscore'),
+        comment_data.get('itemtime'),
+        comment_data.get('itemtitle'),
+        comment_data.get('itemtype'),
+        comment_data.get('itemur')
+    )
+    print(my_item)
+    if 'kids' in comment_data:
+        print(comment_data.get('kids'))
+        itemkids = comment_data.get(kids)
+        for kid in itemkids:
+            comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
+            print(comment_url)
+            comment_data = requests.get(
+                comment_url,
+                headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
+            ).json()
+            recursive_print(comment_data)
 
 today = datetime.date.today()
 today_string = today.strftime("%Y%m%d")
@@ -64,20 +87,8 @@ for story in top_stories:
         kids = story_data.get("kids")
         for kid in kids:
             comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
-            print(comment_url)
             comment_data = requests.get(
                 comment_url,
                 headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
             ).json()
-            my_item = Item(
-                comment_data.get('itemby'),
-                comment_data.get('itemdescendants'),
-                comment_data.get('itemkids'),
-                comment_data.get('itemscore'),
-                comment_data.get('itemtime'),
-                comment_data.get('itemtitle'),
-                comment_data.get('itemtype'),
-                comment_data.get('itemur')
-            )
-            print(my_item)
-            print(comment_data)
+            recursive_print(comment_data)
