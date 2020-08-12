@@ -20,6 +20,8 @@ class Item:
     title: str
     itemtype: str
     url: str
+    parent: int
+    text: str
 
     def __init__(
         self,
@@ -31,6 +33,8 @@ class Item:
         title: str,
         itemtype: str,
         url: str,
+        parent: int,
+        text: str
     ):
         super().__init__()
         self.by = by
@@ -41,6 +45,8 @@ class Item:
         self.title = title
         self.itemtype = itemtype
         self.url = url
+        self.parent = parent,
+        self.text = text
 
 
 def get_item_from_data(comment_data):
@@ -53,6 +59,8 @@ def get_item_from_data(comment_data):
         comment_data.get("title"),
         comment_data.get("type"),
         comment_data.get("url"),
+        comment_data.get("parent"),
+        comment_data.get("text")
     )
     return my_item
 
