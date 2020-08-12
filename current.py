@@ -69,30 +69,36 @@ for story in top_stories:
                 comment_url,
                 headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
             ).json()
+            itemby = None
+            if 'by' in comment_data:
+                itemby = comment_data['by']
             itemdescendants = None
-            if "descendants" in comment_data:
+            if 'descendants' in comment_data:
                 itemdescendants = comment_data['descendants']
             itemkids = None
-            if "kids" in comment_data:
+            if 'kids' in comment_data:
                 itemkids = comment_data['kids']
             itemscore = None
-            if "score" in comment_data:
+            if 'score' in comment_data:
                 itemscore = comment_data['score']
+            itemtime = None
+            if 'time' in comment_data:
+                itemtime = comment_data['time']
             itemtitle = None
-            if "title" in comment_data:
+            if 'title' in comment_data:
                 itemtitle = comment_data['title']
             itemtype = None
-            if "itemtype" in comment_data:
+            if 'itemtype' in comment_data:
                 itemtype = comment_data['type']
             itemurl = None
-            if "url" in comment_data:
+            if 'url' in comment_data:
                 itemurl = comment_data['url']
             my_item = Item(
-                comment_data['by'],
+                itemby,
                 itemdescendants,
                 itemkids,
                 itemscore,
-                comment_data['time'],
+                itemtime,
                 itemtitle,
                 itemtype,
                 itemurl
@@ -104,4 +110,38 @@ for story in top_stories:
                     f"https://hacker-news.firebaseio.com/v0/item/{story}.json",
                     headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
                 ).json()
-                print(kidkid_data)
+                itemby = None
+                if 'by' in comment_data:
+                    itemby = comment_data['by']
+                itemdescendants = None
+                if 'descendants' in comment_data:
+                    itemdescendants = comment_data['descendants']
+                itemkids = None
+                if 'kids' in comment_data:
+                    itemkids = comment_data['kids']
+                itemscore = None
+                if 'score' in comment_data:
+                    itemscore = comment_data['score']
+                itemtime = None
+                if 'time' in comment_data:
+                    itemtime = comment_data['time']
+                itemtitle = None
+                if 'title' in comment_data:
+                    itemtitle = comment_data['title']
+                itemtype = None
+                if 'itemtype' in comment_data:
+                    itemtype = comment_data['type']
+                itemurl = None
+                if 'url' in comment_data:
+                    itemurl = comment_data['url']
+                my_item = Item(
+                    itemby,
+                    itemdescendants,
+                    itemkids,
+                    itemscore,
+                    itemtime,
+                    itemtitle,
+                    itemtype,
+                    itemurl
+                )
+                print(my_item)
