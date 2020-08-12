@@ -70,7 +70,7 @@ def recursive(kid, comment_data):
         if "kids" in comment_data:
             itemkids = comment_data["kids"]
             for kid in itemkids:
-                recursive_print(kid, comment_data)
+                recursive(kid, comment_data)
 
 
 while True:
