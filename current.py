@@ -34,7 +34,7 @@ class Item:
         itemtype: str,
         url: str,
         parent: int,
-        text: str
+        text: str,
     ):
         super().__init__()
         self.by = by
@@ -45,7 +45,7 @@ class Item:
         self.title = title
         self.itemtype = itemtype
         self.url = url
-        self.parent = parent,
+        self.parent = (parent,)
         self.text = text
 
 
@@ -60,17 +60,22 @@ def get_item_from_data(comment_data):
         comment_data.get("type"),
         comment_data.get("url"),
         comment_data.get("parent"),
-        comment_data.get("text")
+        comment_data.get("text"),
     )
     return my_item
 
 
 def recursive(kid):
     comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
-    comment_data = requests.get(
+    MAX_RETRIES = 20
+    session = requests.Session()
+    adapter = requests.adapters.HTTPAdapter(max_retries=MAX_RETRIES)
+    session.mount("https://", adapter)
+    session.mount("http://", adapter)
+    comment_data = session.get(
         comment_url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
     ).json()
-    if comment_data is not None:    
+    if comment_data is not None:
         my_item = get_item_from_data(comment_data)
         with open(f"data/{kid}.txt", "w") as comment_file:
             comment_file.write(repr(my_item))
@@ -79,6 +84,7 @@ def recursive(kid):
             itemkids = comment_data["kids"]
             for kid in itemkids:
                 recursive(kid)
+
 
 top_stories = requests.get(
     "https://hacker-news.firebaseio.com/v0/topstories.json",
