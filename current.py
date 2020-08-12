@@ -72,6 +72,14 @@ def recursive_print(comment_data):
             recursive_print(comment_data)
 
 
+def recursive(kid: int):
+    comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
+    comment_data = requests.get(
+        comment_url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
+    ).json()
+    recursive_print(comment_data)
+
+
 today = datetime.date.today()
 today_string = today.strftime("%Y%m%d")
 top_stories = requests.get(
@@ -88,13 +96,7 @@ for story in top_stories:
         title = story_data.get("title")
         score = story_data["score"]
         url = story_data.get("url")
-        print(url)
     if "kids" in story_data:
         kids = story_data.get("kids")
         for kid in kids:
-            comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
-            comment_data = requests.get(
-                comment_url,
-                headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
-            ).json()
-            recursive_print(comment_data)
+            recursive(kid)
