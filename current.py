@@ -57,7 +57,7 @@ def get_item_from_data(comment_data):
     return my_item
 
 
-def recursive(kid, comment_data):
+def recursive(kid):
     comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
     comment_data = requests.get(
         comment_url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
@@ -70,7 +70,7 @@ def recursive(kid, comment_data):
         if "kids" in comment_data:
             itemkids = comment_data["kids"]
             for kid in itemkids:
-                recursive(kid, comment_data)
+                recursive(kid)
 
 
 while True:
