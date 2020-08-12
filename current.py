@@ -77,7 +77,7 @@ for story in top_stories:
                 comment_data.get('itemtime'),
                 comment_data.get('itemtitle'),
                 comment_data.get('itemtype'),
-                comment_data.get('itemur')l
+                comment_data.get('itemur')
             )
             print(my_item)
             print(comment_data)
