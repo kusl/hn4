@@ -1,0 +1,4 @@
+{
+    "python.pythonPath": "/home/kushal/src/py/hn4/venv/bin/python3",
+    "python.formatting.provider": "black"
+}
