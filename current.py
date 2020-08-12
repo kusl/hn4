@@ -80,25 +80,23 @@ def recursive(kid):
             for kid in itemkids:
                 recursive(kid)
 
+top_stories = requests.get(
+    "https://hacker-news.firebaseio.com/v0/topstories.json",
+    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+).json()
+for story in top_stories:
+    recursive(story)
 
-while True:
-    top_stories = requests.get(
-        "https://hacker-news.firebaseio.com/v0/topstories.json",
-        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-    ).json()
-    for story in top_stories:
-        recursive(story)
+new_stories = requests.get(
+    "https://hacker-news.firebaseio.com/v0/newstories.json",
+    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+).json()
+for story in new_stories:
+    recursive(story)
 
-    new_stories = requests.get(
-        "https://hacker-news.firebaseio.com/v0/newstories.json",
-        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-    ).json()
-    for story in new_stories:
-        recursive(story)
-
-    best_stories = requests.get(
-        "https://hacker-news.firebaseio.com/v0/beststories.json",
-        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-    ).json()
-    for story in best_stories:
-        recursive(story)
+best_stories = requests.get(
+    "https://hacker-news.firebaseio.com/v0/beststories.json",
+    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+).json()
+for story in best_stories:
+    recursive(story)
