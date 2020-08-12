@@ -34,6 +34,11 @@ jobs:
     - name: Run current.py
       run: | 
         time python current.py
+    - name: Upload math result for job 1
+      uses: actions/upload-artifact@v2
+      with:
+        name: data
+        path: data/
     - name: Test with pytest
       run: |
         pytest
