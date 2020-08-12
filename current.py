@@ -23,15 +23,12 @@ for story in top_stories:
     ):
         print(f"\nStory: {story}")
         title = story_data.get("title")
-        with open(
-            f"data/{today_string}/{story}/{story}.txt", "w"
-        ) as story_file:
-            score = story_data["score"]
-            url = story_data.get("url")
-            print(url)
-            story_original_html = requests.post(
-                "https://archive.fo/submit", data={"url": url}
-            )
+        score = story_data["score"]
+        url = story_data.get("url")
+        print(url)
+        story_original_html = requests.post(
+            "https://archive.fo/submit", data={"url": url}
+        )
     if "kids" in story_data:
         kids = story_data.get("kids")
         for kid in kids:
