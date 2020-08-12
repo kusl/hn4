@@ -22,9 +22,6 @@ for story in top_stories:
         score = story_data["score"]
         url = story_data.get("url")
         print(url)
-        story_original_html = requests.post(
-            "https://archive.fo/submit", data={"url": url}
-        )
     if "kids" in story_data:
         kids = story_data.get("kids")
         for kid in kids:
