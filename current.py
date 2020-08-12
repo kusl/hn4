@@ -57,8 +57,10 @@ def get_item_from_data(comment_data):
     return my_item
 
 
-def recursive_print(comment_data):
+def recursive_print(id, comment_data):
     my_item = get_item_from_data(comment_data)
+    with open("data/{kid}.txt", "w") as comment_file:
+        comment_file.write(repr(my_item))
     print(my_item)
     if "kids" in comment_data:
         itemkids = comment_data["kids"]
@@ -77,26 +79,26 @@ def recursive(kid: int):
     comment_data = requests.get(
         comment_url, headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
     ).json()
-    recursive_print(comment_data)
+    recursive_print(kid, comment_data)
 
+while True:
+    top_stories = requests.get(
+        "https://hacker-news.firebaseio.com/v0/topstories.json",
+        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+    ).json()
+    for story in top_stories:
+        recursive(story)
 
-top_stories = requests.get(
-    "https://hacker-news.firebaseio.com/v0/topstories.json",
-    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-).json()
-for story in top_stories:
-    recursive(story)
+    new_stories = requests.get(
+        "https://hacker-news.firebaseio.com/v0/newstories.json",
+        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+    ).json()
+    for story in new_stories:
+        recursive(story)
 
-new_stories = requests.get(
-    "https://hacker-news.firebaseio.com/v0/newstories.json",
-    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-).json()
-for story in new_stories:
-    recursive(story)
-
-best_stories = requests.get(
-    "https://hacker-news.firebaseio.com/v0/beststories.json",
-    headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
-).json()
-for story in best_stories:
-    recursive(story)
+    best_stories = requests.get(
+        "https://hacker-news.firebaseio.com/v0/beststories.json",
+        headers={"Cache-Control": "no-cache", "Pragma": "no-cache"},
+    ).json()
+    for story in best_stories:
+        recursive(story)
