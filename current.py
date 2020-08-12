@@ -21,7 +21,6 @@ for story in top_stories:
         and "score" in story_data
         and "url" in story_data
     ):
-        hn.write(f"\nStory: {story}")
         print(f"\nStory: {story}")
         title = story_data.get("title")
         with open(
