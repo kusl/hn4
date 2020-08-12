@@ -42,21 +42,26 @@ class Item:
         self.itemtype = itemtype
         self.url = url
 
-def recursive_print(comment_data):
+
+def get_item_from_data(comment_data):
     my_item = Item(
-        comment_data.get('itemby'),
-        comment_data.get('itemdescendants'),
-        comment_data.get('itemkids'),
-        comment_data.get('itemscore'),
-        comment_data.get('itemtime'),
-        comment_data.get('itemtitle'),
-        comment_data.get('itemtype'),
-        comment_data.get('itemur')
+        comment_data.get("by"),
+        comment_data.get("descendants"),
+        comment_data.get("kids"),
+        comment_data.get("score"),
+        comment_data.get("time"),
+        comment_data.get("title"),
+        comment_data.get("type"),
+        comment_data.get("url"),
     )
+    return my_item
+
+
+def recursive_print(comment_data):
+    my_item = get_item_from_data(comment_data)
     print(my_item)
-    if 'kids' in comment_data:
-        print(comment_data.get('kids'))
-        itemkids = comment_data['kids']
+    if "kids" in comment_data:
+        itemkids = comment_data["kids"]
         for kid in itemkids:
             comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
             print(comment_url)
@@ -65,6 +70,7 @@ def recursive_print(comment_data):
                 headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
             ).json()
             recursive_print(comment_data)
+
 
 today = datetime.date.today()
 today_string = today.strftime("%Y%m%d")
