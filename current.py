@@ -58,20 +58,20 @@ def get_item_from_data(comment_data):
 
 
 def recursive_print(id, comment_data):
-    my_item = get_item_from_data(comment_data)
-    with open("data/{kid}.txt", "w") as comment_file:
-        comment_file.write(repr(my_item))
-    print(my_item)
-    if "kids" in comment_data:
-        itemkids = comment_data["kids"]
-        for kid in itemkids:
-            comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
-            print(comment_url)
-            comment_data = requests.get(
-                comment_url,
-                headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
-            ).json()
-            recursive_print(comment_data)
+    if comment_data is not None:    
+        my_item = get_item_from_data(comment_data)
+        with open("data/{kid}.txt", "w") as comment_file:
+            comment_file.write(repr(my_item))
+        print(my_item)
+        if "kids" in comment_data:
+            itemkids = comment_data["kids"]
+            for kid in itemkids:
+                comment_url = f"https://hacker-news.firebaseio.com/v0/item/{kid}.json"
+                comment_data = requests.get(
+                    comment_url,
+                    headers={"Cache-Control": "no-cache", "Pragma": "no-cache",},
+                ).json()
+                recursive_print(comment_data)
 
 
 def recursive(kid: int):
